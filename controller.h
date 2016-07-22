@@ -99,6 +99,15 @@ public:
     /// get the next controller in the chain after this one.  will return NULL at the end of the chain
     CLEDController *next() { return m_pNext; }
 
+    /// Dirty hack to bypass the static initialisation of the CLEDController
+    /// linked list. A prime example of when "clever" code makes things
+    /// more difficult.
+    void enforceSolo() {
+        m_pHead = this;
+        m_pTail = this;
+        m_pNext = NULL;
+    }
+
 	/// set the default array of leds to be used by this controller
     CLEDController & setLeds(CRGB *data, int nLeds) {
         m_Data = data;
